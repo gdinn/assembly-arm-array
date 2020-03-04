@@ -37,32 +37,34 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-uint32_t* filter(uint32_t* x, uint32_t* y, uint32_t* w){
+uint32_t* filter32(uint32_t* x, uint32_t* y, uint32_t* w){
 	uint32_t sw1=0, sw2=0, i=0;
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
 	  asm volatile(
 			  "mov %[i], 7 \n\t"
-			  "loop: \n\t"
+			  "loop32: \n\t"
 		  	  	  "ldr %[sw1], [%[x]], 4 \n\t"
 		  	  	  "ldr %[sw2], [%[y]], 4 \n\t"
 			  	  "mul %[sw1], %[sw1], %[sw2] \n\t"
 			  	  "str %[sw1], [%[w]], 4 \n\t"
 			  	  "cmp %[i], 0 \n\t"
-			  	  "beq fim \n\t"
+			  	  "beq fim32 \n\t"
 			  	  "subs %[i], %[i], 1 \n\t"
-			  	  "b loop \n\t"
-			  "fim: \n\t"
-			  	: [w] "+r" (w)
+			  	  "b loop32 \n\t"
+			  "fim32: \n\t"
+			  	: [w] "+r" (w) //+r because we need to read w to navigate through the memory!!
 				: [x] "r" (x),
 				  [y] "r" (y),
 				  [i] "r" (i),
 				  [sw1] "r" (sw1),
 				  [sw2] "r" (sw2)
-				: "memory"
-
-
+				: "memory" //memory because the memory is changed (and not only the registers)
 	  );
+	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
 	  return w;
 }
+
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -126,17 +128,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  uint32_t x[8] = {1,2,3,4,5,6,7,8};
 	  uint32_t y[8] = {2,3,4,5,6,7,8,1};
 	  uint32_t w[8] = {0,0,0,0,0,0,0,0};
+
+	  filter32(x,y,w);
+
+
 	  uint32_t i;
-
-	  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
-	  //HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
-
-	  filter(x,y,w);
-
-	  HAL_Delay(2000);
 	  limpa_LCD();
 	  char str[3];
 
@@ -146,7 +146,6 @@ int main(void)
 	  }
 
 	  imprime_LCD();
-
 
     /* USER CODE END WHILE */
 
@@ -203,12 +202,12 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6 
-                          |GPIO_PIN_7, GPIO_PIN_RESET);
+                          |GPIO_PIN_7|GPIO_PIN_11, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PA3 PA4 PA5 PA6 
-                           PA7 */
+                           PA7 PA11 */
   GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6 
-                          |GPIO_PIN_7;
+                          |GPIO_PIN_7|GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
