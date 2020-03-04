@@ -22,4 +22,9 @@ IDE: <br>
 STM32CubeIde <br>
 STM23CubeProgrammer (Writing inline asm programs doesnt let me rewrite the programs on the chip without hardware reset)<br>
 
-All the credits of the LCD library goes to Borges Corporation on http://borgescorporation.blogspot.com/search?q=5110
+All the credits of the LCD library goes to Borges Corporation on http://borgescorporation.blogspot.com/search?q=5110 <br>
+
+Interesting links for inline assembly: <br>
+https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html#OutputOperands <br>
+https://gcc.gnu.org/onlinedocs/gcc/Simple-Constraints.html#Simple-Constraints <br>
+https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html <br>
