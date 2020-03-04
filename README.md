@@ -14,11 +14,11 @@ Where x and y are arrays with 8 elements with fixed numbers. W also has 8 elemen
 It was used a display to check if the assembly code was returning correct values.
 
 
-Components used:
-STM32F103c8t6
-LCD NOKIA5110
+Components used: <br>
+STM32F103c8t6 <br>
+LCD NOKIA5110 <br>
 
-IDE:
-STM32CubeIde
-STM23CubeProgrammer (Writing inline asm programs doesnt let me rewrite the programs on the chip without hardware reset)
+IDE: <br>
+STM32CubeIde <br>
+STM23CubeProgrammer (Writing inline asm programs doesnt let me rewrite the programs on the chip without hardware reset)<br>
 
