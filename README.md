@@ -22,3 +22,4 @@ IDE: <br>
 STM32CubeIde <br>
 STM23CubeProgrammer (Writing inline asm programs doesnt let me rewrite the programs on the chip without hardware reset)<br>
 
+All the credits of the LCD library goes to Borges Corporation on http://borgescorporation.blogspot.com/search?q=5110
